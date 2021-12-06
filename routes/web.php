@@ -114,6 +114,8 @@ Route::get('/active-product/{id}',[ProductController::class,'active_product']);
 Route::get('/manage-order',[OrderController::class,'manage_order']);
 Route::get('/view-order/{order_code}',[OrderController::class,'view_order']);
 Route::get('/print-order/{checkout_code}',[OrderController::class,'print_order']);
+Route::post('/update-order-qty',[OrderController::class,'update_order_qty']);
+Route::post('/update-qty',[OrderController::class,'update_qty']);
 
 // Route::get('/delete-order/{orderId}',[OrderController::class,'delete_order']);
 //Coupon

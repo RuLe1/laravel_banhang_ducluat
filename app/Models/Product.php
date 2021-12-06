@@ -17,6 +17,7 @@ class Product extends Model
         'category_id',
         'brand_id',
         'product_name',
+        'product_quantity',
         'product_price',
         'product_desc',
         'product_content',

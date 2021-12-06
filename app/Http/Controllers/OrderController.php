@@ -9,11 +9,55 @@ use App\Models\Shipping;
 use App\Models\OrderDetails;
 use App\Models\Feeship;
 use App\Models\Customer;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Dompdf\Adapter\PDFLib;
 
 class OrderController extends Controller
 {
+    public function update_qty(Request  $request){
+        $data = $request->all();
+        $order_details = OrderDetails::where('product_id',$data['order_product_id'])->where('order_code',$data['order_code'])->first();
+        $order_details ->product_sales_quantity = $data['order_qty'];
+        $order_details->save();
+    }
+    public function update_order_qty(Request $request){
+        //update order status
+        $data = $request->all();
+        $order = Order::find($data['order_id']);
+        $order->order_status = $data['order_status'];
+        $order->save();
+        
+        if($order->order_status == 2){
+            foreach($data['order_product_id'] as $key => $product_id){
+                $product = Product::find($product_id);
+                $product_quantity = $product->product_quantity;
+                $product_sold = $product->product_sold;
+                foreach($data['quantity'] as $key2 => $qty){
+                    if($key == $key2){
+                        $pro_remain = $product_quantity - $qty;
+                        $product->product_quantity = $pro_remain;
+                        $product->product_sold = $product_sold + $qty;
+                        $product->save();
+                    }
+                }
+            }
+        }elseif($order->order_status != 2 && $order->order_status != 1){
+            foreach($data['order_product_id'] as $key => $product_id){
+                $product = Product::find($product_id);
+                $product_quantity = $product->product_quantity;
+                $product_sold = $product->product_sold;
+                foreach($data['quantity'] as $key2 => $qty){
+                    if($key == $key2){
+                        $pro_remain = $product_quantity + $qty;
+                        $product->product_quantity = $pro_remain;
+                        $product->product_sold = $product_sold - $qty;
+                        $product->save();
+                    }
+                }
+            }
+        }
+    }
     public function manage_order(){
         $adminUser = Auth::guard('admin')->user();
         $order = Order::orderBy('created_at','DESC')->get();
@@ -27,6 +71,7 @@ class OrderController extends Controller
         foreach($order as $key => $ord){
             $customer_id = $ord->customer_id;
             $shipping_id = $ord->shipping_id;
+            $order_status = $ord->order_status;
         }
         $customer = Customer::where('id',$customer_id)->first();
         $shipping = Shipping::where('id',$shipping_id)->first();
@@ -43,7 +88,7 @@ class OrderController extends Controller
             $coupon_condition = 2;
             $coupon_number = 0;
         }
-        return view('admin.order.view_order',['user'=>$adminUser])->with(compact('order_details_product','order_details','order','customer','shipping','coupon_condition','coupon_number'));
+        return view('admin.order.view_order',['user'=>$adminUser])->with(compact('order_details_product','order_details','order','customer','shipping','coupon_condition','coupon_number','order_status'));
     }
     public function print_order($checkout_code){
         $pdf = \App::make('dompdf.wrapper');

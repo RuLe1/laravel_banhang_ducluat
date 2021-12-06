@@ -23,6 +23,10 @@
                             <input name="product_name" value="{{$edit->product_name}}"class="form-control" id="exampleInputEmail1" placeholder="Tên sản phẩm">
                         </div>
                         <div class="form-group">
+                            <label for="exampleInputEmail1">Số lượng</label>
+                            <input name="product_quantity" value="{{$edit->product_quantity}}"class="form-control" id="exampleInputEmail1" placeholder="Số lượng sản phẩm">
+                        </div>
+                        <div class="form-group">
                             <label for="exampleInputEmail1">Giá sản phẩm</label>
                             <input type="text" name="product_price" value="{{$edit->product_price}}"class="form-control" id="exampleInputEmail1" placeholder="Giá sản phẩm">
                         </div>

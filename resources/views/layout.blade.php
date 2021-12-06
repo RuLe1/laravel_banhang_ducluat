@@ -45,8 +45,8 @@
 					<div class="col-sm-6">
 						<div class="contactinfo">
 							<ul class="nav nav-pills">
-								<li><a href="#"><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
-								<li><a href="#"><i class="fa fa-envelope"></i> info@domain.com</a></li>
+								<li><a href="#"><i class="fa fa-phone"></i>0373.515.202</a></li>
+								<li><a href="#"><i class="fa fa-envelope"></i>holuat162@gmail.com</a></li>
 							</ul>
 						</div>
 					</div>
@@ -201,7 +201,7 @@
 									<h1><span>E</span>-Closet</h1>
 									<h2>Hàng nhập chính hãng từ Quảng Châu</h2>
 									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-									<button type="button" class="btn btn-default get">Get it now</button>
+									<button type="button" class="btn btn-default get">Mua ngay</button>
 								</div>
 								<div class="col-sm-6">
 									<img src="{{asset('public/uploads/slider/'.$slide->slider_image)}}" class="girl img-responsive" alt="{{$slide->slider_desc}}" />
@@ -291,7 +291,7 @@
 							<div class="video-gallery text-center">
 								<a href="#">
 									<div class="iframe-img">
-										<img src="images/home/iframe2.png" alt="" />
+										<img src="{{asset('frontend/images/iframe1.png')}}" alt="" />
 									</div>
 									<div class="overlay-icon">
 										<i class="fa fa-play-circle-o"></i>
@@ -306,7 +306,7 @@
 							<div class="video-gallery text-center">
 								<a href="#">
 									<div class="iframe-img">
-										<img src="images/home/iframe3.png" alt="" />
+										<img src="{{asset('frontend/images/iframe1.png')}}" alt="" />
 									</div>
 									<div class="overlay-icon">
 										<i class="fa fa-play-circle-o"></i>
@@ -321,7 +321,7 @@
 							<div class="video-gallery text-center">
 								<a href="#">
 									<div class="iframe-img">
-										<img src="images/home/iframe4.png" alt="" />
+										<img src="{{asset('frontend/images/iframe1.png')}}" alt="" />
 									</div>
 									<div class="overlay-icon">
 										<i class="fa fa-play-circle-o"></i>
