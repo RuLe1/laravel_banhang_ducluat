@@ -210,6 +210,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         });
     });
 </script>
+//Thay đổi tình trạng đơn hàng dẫn đến thay đổi số lượng hàng trong kho
 <script type="text/javascript">
     $('.orderdetails_status').change(function(){
         var order_status = $(this).val();
