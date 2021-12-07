@@ -12,6 +12,7 @@ use App\Http\Controllers\CouponController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SliderController;
+use App\Http\Controllers\MailController;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -123,6 +124,10 @@ Route::get('/insert-coupon',[CouponController::class,'insert_coupon']);
 Route::post('/save-coupon',[CouponController::class,'save_coupon']);
 Route::get('/list-coupon',[CouponController::class,'list_coupon']);
 Route::get('/delete-coupon/{id}',[CouponController::class,'delete_coupon']);
+//Send Coupon
+Route::get('/send-coupon-vip',[MailController::class,'send_coupon_vip']);
+Route::get('/send-coupon',[MailController::class,'send_coupon']);
+
 //Vận chuyển
 Route::get('/delivery',[DeliveryController::class,'delivery']);
 Route::post('/select-delivery',[DeliveryController::class,'select_delivery']);
