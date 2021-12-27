@@ -14,7 +14,7 @@ class MailController extends Controller
     public function send_coupon(){
         //get customer
         $customer = Customer::where('customer_vip','=',NULL)->get();
-        echo $now = Carbon::now('Asia/Ho_Chi_Minh')->format('d-m-Y H:i:s');
+        $now = Carbon::now('Asia/Ho_Chi_Minh')->format('d-m-Y H:i:s');
         $title_mail = "Mã khuyến mãi ngày".''.$now;
         $data = [];
         foreach($customer as $vip){

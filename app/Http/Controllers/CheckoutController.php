@@ -29,20 +29,18 @@ use function GuzzleHttp\Promise\all;
 
 class CheckoutController extends Controller
 {
-    public function send_mail(){
-        return view('pages.mail_order');
-    }
     public function confirm_order(Request $request){
         $data = $request->all();
-        //lấy coupon
-        // if($data['coupon']!='Không có'){
-        //     $coupon = Coupon::where('coupon_code',$data['coupon'])->first();
+        //get coupon
+        // if($data['order_coupon']!='no'){
+        //     $coupon = Coupon::where('coupon_code',$data['order_coupon'])->first();
         //     $coupon_mail = $coupon->coupon_code;
-        //     $coupon->save();
+        //     $coupon->save(); 
         // }else{
         //     $coupon_mail = 'Không có sử dụng';
         // }
         //end-coupon code
+        //get vận chuyển
         $shipping = new Shipping();
         $shipping->shipping_name = $data['shipping_name'];
         $shipping->shipping_address = $data['shipping_address'];
@@ -60,6 +58,7 @@ class CheckoutController extends Controller
         $order->shipping_id = $shipping_id;
         $order->order_status = 1;
         $order->order_code = $checkout_code;
+
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $order->created_at = now();
         $order->save();
@@ -80,11 +79,12 @@ class CheckoutController extends Controller
         Session::forget('fee');
         Session::forget('coupon');
         Session::forget('cart');
+
     //send mail confirm
     // $now = Carbon::now('Asia/Ho_Chi_Minh')->format('d-m-Y H:i:s');
     // $title_mail = "Đơn hàng E-closet xác nhận ngày".''.$now;
     // $customer = Customer::find(Session::get('id'));
-    // $data['email'][] = $customer->customer_email;
+    // $data['email'][] = $shipping->shipping_email;
     // //lấy giỏ hàng
     // if(Session::get('cart') == true){
     //     foreach(Session::get('cart') as $key => $cart_mail){
@@ -97,20 +97,20 @@ class CheckoutController extends Controller
     // }
     //lấy shipping
     // $shipping_array = array(
-    //     'customer_name' => $customer->customer_name,
-    //     'shipping_name' => $data['shipping_name'],
-    //     'shipping_email' => $data['shipping_email'],
-    //     'shipping_phone' => $data['shipping_phone'],
-    //     'shipping_address' => $data['shipping_address'],
-    //     'shipping_notes' => $data['shipping_notes'],
-    //     'shipping_method' => $data['shipping_method']
+    //     //  'customer_name' => $customer->customer_name,
+    //      'shipping_name' => $data['shipping_name'],
+    //      'shipping_email' => $data['shipping_email'],
+    //      'shipping_phone' => $data['shipping_phone'],
+    //      'shipping_address' => $data['shipping_address'],
+    //      'shipping_notes' => $data['shipping_notes'],
+    //      'shipping_method' => $data['shipping_method']
     // );
     //lấy mã giảm giá, lấy mã đơn hàng
     // $ordercode_mail = array(
     //     'coupon_code' => $coupon_mail,
     //     'order_code' => $checkout_code
     // );
-    // Mail::send('pages.mail_order',['cart_array'=>$cart_array,'shipping_array'=>$shipping_array],
+    // Mail::send('pages.mail_order',compact('cart_array','shipping_array','ordercode_mail'),
     //     function($message) use ($title_mail,$data){
     //         $message->to($data['email'])->subject($title_mail);
     //         $message->from($data['email'],$title_mail);
@@ -131,7 +131,6 @@ class CheckoutController extends Controller
                         Session::put('fee',15000);
                         Session::save();
                 }
-            
             }
         }
     }

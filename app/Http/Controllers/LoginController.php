@@ -10,6 +10,9 @@ use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
+    public function test(){
+        return view('pages.test');
+    }
     public function login_facebook(){
         return Socialite::driver('facebook')->redirect();
     }

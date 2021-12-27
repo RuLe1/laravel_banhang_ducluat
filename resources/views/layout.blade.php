@@ -427,7 +427,36 @@
 	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 	<div id="fb-root"></div>
 	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v12.0&appId=1529134097448744&autoLogAppEvents=1" nonce="J8rgKCHW"></script>
-	
+	<!-- Messenger Plugin chat Code -->
+    <div id="fb-root"></div>
+
+    <!-- Your Plugin chat code -->
+    <div id="fb-customer-chat" class="fb-customerchat">
+    </div>
+
+    <script>
+      var chatbox = document.getElementById('fb-customer-chat');
+      chatbox.setAttribute("page_id", "115419990304812");
+      chatbox.setAttribute("attribution", "biz_inbox");
+    </script>
+
+    <!-- Your SDK code -->
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          xfbml            : true,
+          version          : 'v12.0'
+        });
+      };
+
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
 	<script type="text/javascript">
 		$(document).ready(function(){
             $('.send_order').click(function(){
@@ -547,12 +576,22 @@
                 var cart_product_name = $('.cart_product_name_' + id).val();
                 var cart_product_image = $('.cart_product_image_' + id).val();
                 var cart_product_price = $('.cart_product_price_' + id).val();
+                var cart_product_quantity = $('.cart_product_quantity_' + id).val();
                 var cart_product_qty = $('.cart_product_qty_' + id).val();
                 var _token = $('input[name="_token"]').val();
+				if(parseInt(cart_product_qty) > parseInt(cart_product_quantity)){
+					alert('Làm ơn đặt nhỏ hơn ' + cart_product_quantity);
+				}else{
                 $.ajax({
                     url: "{{url('/add-cart-ajax')}}",
                     method: 'POST',
-                    data:{cart_product_id:cart_product_id,cart_product_name:cart_product_name,cart_product_image:cart_product_image,cart_product_price:cart_product_price,cart_product_qty:cart_product_qty,_token:_token},
+                    data:{cart_product_id:cart_product_id,
+						cart_product_name:cart_product_name,
+						cart_product_image:cart_product_image,
+						cart_product_price:cart_product_price,
+						cart_product_qty:cart_product_qty,
+						cart_product_quantity:cart_product_quantity,
+						_token:_token},
                     success:function(){
                         swal({
                                 title: "Đã thêm sản phẩm vào giỏ hàng",
@@ -568,6 +607,7 @@
                             });
                     }
                 });
+			}
             });
         });
     </script>

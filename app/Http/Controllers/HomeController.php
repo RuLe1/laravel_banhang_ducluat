@@ -10,19 +10,19 @@ use App\Models\Slider;
 use Illuminate\Support\Facades\Mail;
 class HomeController extends Controller
 {
-    public function send_mail(){
-        $to_name = "E-Closet";
-        $to_email = "holuat162@gmail.com";
+    // public function send_mail(){
+    //     $to_name = "E-Closet";
+    //     $to_email = "holuat162@gmail.com";
 
-        $data = array("name"=>"Mail từ Shop E-Closet","body"=>"Mail gửi xác nhận bạn đặt hàng");
+    //     $data = array("name"=>"Mail từ Shop E-Closet","body"=>"Mail gửi xác nhận bạn đặt hàng");
     
-        Mail::send('pages.send_mail',$data,function($message) use ($to_name,$to_email){
-            $message->to($to_email)->subject('test mail nhé');
-            $message->from($to_email,$to_name);
-        });
-        return redirect('/')->with('message','');
+    //     Mail::send('pages.send_mail',$data,function($message) use ($to_name,$to_email){
+    //         $message->to($to_email)->subject('test mail nhé');
+    //         $message->from($to_email,$to_name);
+    //     });
+    //     return redirect('/')->with('message','');
 
-    }
+    // }
     public function index(Request $request){
         //seo
         $meta_desc = "Chuyên order KELIFAN cao cấp chính hãng, mới nhất, đẹp nhất, khác biệt nhất";

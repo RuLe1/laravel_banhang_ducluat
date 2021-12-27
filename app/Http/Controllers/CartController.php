@@ -45,6 +45,7 @@ class CartController extends Controller
                     'id'=> $data['cart_product_id'],
                     'product_name'=> $data['cart_product_name'],
                     'product_image'=> $data['cart_product_image'],
+                    'product_quantity'=> $data['cart_product_quantity'],
                     'product_qty'=> $data['cart_product_qty'],
                     'product_price'=> $data['cart_product_price'],
                    );
@@ -57,6 +58,7 @@ class CartController extends Controller
             'id'=> $data['cart_product_id'],
             'product_image'=> $data['cart_product_image'],
             'product_price'=> $data['cart_product_price'],
+            'product_quantity'=> $data['cart_product_quantity'],
             'product_qty'=> $data['cart_product_qty'],
            );
            Session::put('cart',$cart);
@@ -80,15 +82,21 @@ class CartController extends Controller
         $data = $request->all();
         $cart = Session::get('cart');
         if($cart == true){
+            $status = '';
             foreach($data['cart_qty'] as $key => $qty){//cart_qty là name của cart_ajax_blade
+                $i=0;
                foreach($cart as $session => $val){
-                   if($val['session_id'] == $key){
-                       $cart[$session]['product_qty'] = $qty;//product_qty là cột của table product
+                   $i++;
+                   if($val['session_id'] == $key && $qty < $cart[$session]['product_quantity']){    
+                       $cart[$session]['product_qty'] = $qty;
+                       $status.='<p style="color:blue">'.$i.'. Cập nhật số lượng: '.$cart[$session]['product_name'].' thành công</p>';
+                   }elseif($val['session_id'] == $key &&  $qty > $cart[$session]['product_quantity']){
+                       $status.='<p style="color:red">'.$i.'. Cập nhật số lượng: '.$cart[$session]['product_name'].' thất bại</p>';
                    }
                }
             }
             Session::put('cart',$cart);
-            return redirect()->back()->with('status','Cập nhật số lượng sản phẩm thành công');
+            return redirect()->back()->with('status',$status);
         }
     }
     public function del_all_product(){

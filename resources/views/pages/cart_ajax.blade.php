@@ -11,7 +11,7 @@
 				<div class="card-body">
 					@if (session('status'))
 						<div class="alert alert-success" role="alert">
-							{{ session('status') }}
+							{!! session('status') !!}
 						</div>
 					@elseif (session()->has('error'))
 					<div class="alert alert-danger" role="alert">>
@@ -171,7 +171,5 @@
 				</table>							
 			</div>
 	</section>
-	<section id="do_action">
-						
-	</section>
+	
 @endsection

@@ -52,6 +52,7 @@
                 <input type="hidden" value="{{$value->product_name}}" class="cart_product_name_{{$value->id}}">
                 <input type="hidden" value="{{$value->product_image}}" class="cart_product_image_{{$value->id}}">
                 <input type="hidden" value="{{$value->product_price}}" class="cart_product_price_{{$value->id}}">
+                <input type="hidden" value="{{$value->product_quantity}}" class="cart_product_quantity_{{$value->id}}">
 
                 <input name="productid_hidden" type="hidden"value="{{$value->id}}"/>
                 <button type="button" class="btn btn-fefault add-to-cart"data-id_product="{{$value->id}}" name="add-to-cart">

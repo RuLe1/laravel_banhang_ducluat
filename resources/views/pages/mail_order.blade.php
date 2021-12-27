@@ -4,21 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>Xác nhận đơn hàng</title>
 </head>
 <body>				
     <div class="col-md-6" style="padding-top:0px">		 
         <div class="" style="color:#0f146d;text-align:center">Cám ơn bạn đã đặt hàng tại E-Closet</div>
         <div class="">
             <h2>Xin chào{{$shipping_array['customer_name']}}</h2>
-            <p>Lazada đã nhận được yêu cầu đặt hàng của bạn và đang xử lý nhé. Bạn sẽ nhận được thông báo tiếp theo khi đơn hàng đã sẵn sàng được giao.</p>
-           
+            <p>E-Closet đã nhận được yêu cầu đặt hàng của bạn và đang xử lý nhé. Bạn sẽ nhận được thông báo tiếp theo khi đơn hàng đã sẵn sàng được giao.</p>
+            <p>Mã đơn hàng: {{$ordercode_mail['order_code']}}</p>
+            <p>Mã khuyến mãi áp dụng: {{$ordercode_mail['order_coupon']}}</p>
         </div>
     </div>
     <div class="col-md-12">
-	    <div class="">Đơn hàng được giao đến:</div>
-            <div class="">
+	    <p>Đơn hàng được giao đến:</p>
             <table cellpadding="2" cellspacing="0" width="100%">
                 <tbody>
                 <tr>
@@ -46,15 +46,13 @@
                     <td valign="top" style="color:#0f146d;font-weight:bold">Email:</td>
                     @if($shipping_array['shipping_email'] == '') Không có
                     @else
-                    <td valign="top"><a href="mailto:{{$shipping_array['shipping_email']}}" target="_blank">{{$shipping_array['shipping_email']}}</a></td>
+                    <td valign="top">{{$shipping_array['shipping_email']}}</td>
                     @endif
                 </tr>
                 </tbody>
             </table>
-        </div>
     </div>
     <div class="" style="padding-top:0px">
-    <div class="">
         <table cellpadding="0" cellspacing="0" class="" style="border-bottom:1px solid #d8d8d8">
             <thead>
                 <tr>
@@ -69,7 +67,7 @@
                     $sub_total = 0;
                     $total = 0;
                 @endphp
-                @foreach($cart_array as $key => $cart)
+                @foreach($cart_array as $cart)
                     @php  
                         $sub_total = $cart['product_price'] * $cart['product_qty'];
                         $total+=$sub_total;
@@ -92,7 +90,7 @@
             <tr>
                 <td valign="top" style="color:#585858;width:49%">Hình thức thanh toán:</td>
                 <td align="right" valign="top" colspan="2">
-                    @if(shipping_array['shipping_method'] == 0)
+                    @if($shipping_array['shipping_method'] == 0)
                     Chuyển khoản ATM 
                     @else Tiền mặt 
                     @endif  
@@ -100,7 +98,6 @@
             </tr>
             </tbody>
         </table>
-    </div>
     </div>
 </div>
 
