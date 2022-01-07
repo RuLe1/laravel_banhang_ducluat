@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
-
+use App\Models\Gallery;
+use File;
 class ProductController extends Controller
 {
     public function add_product(){
@@ -35,19 +36,25 @@ class ProductController extends Controller
         $data['brand_id'] = $request->product_brand;
         $data['status'] = $request->product_status;
         //thêm ảnh vào folder 
+        $path = 'public/uploads/product/';
+        $path_gallery = 'public/uploads/gallery/';
         $get_image = $request->file('product_image');
         if($get_image){
             $get_name_image = $get_image->getClientOriginalName();
             $name_image = current(explode('.',$get_name_image));
-            $path = 'public/uploads/product/';
             $new_image = $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
             $get_image -> move($path,$new_image);
+            File::copy($path.$new_image,$path_gallery.$new_image);
             $data['product_image'] = $new_image;
-            DB::table('product')->insert($data);
-            return redirect()->back()->with('status','Thêm sản phẩm thành công');
         }
-        $data['product_image'] = '';
-        DB::table('product')->insert($data);
+        $pro_id = DB::table('product')->insertGetId($data);
+
+        $gallery = new Gallery();
+        $gallery->gallery_image = $new_image;
+        $gallery->gallery_name = $new_image;
+        $gallery->product_id = $pro_id;
+        $gallery->save();
+
         return redirect()->back()->with('status','Thêm sản phẩm thành công');
     }
     public function unactive_product($id){
@@ -113,11 +120,14 @@ class ProductController extends Controller
         $details_product = Product::with('categoryproduct','brandproduct')->where('id',$id)->get();
         foreach($details_product as $key => $value){
             $category_id = $value->category_id;
+            $product_id = $value->id;
         }
+        $gallery = Gallery::where('product_id',$product_id)->get();
+
         $related_product = DB::table('product')->join('category_product','category_product.id','=','product.category_id')
         ->join('brand_product','brand_product.id','=','product.brand_id')->where('category_product.id',$category_id)
         ->whereNotIn('product.id',[$id])->get();
     
-        return view('pages.show_details')->with(compact('category_id','list_category','list_brand','details_product','related_product','meta_desc','meta_keywords','meta_title','url_canonical','slider'));
+        return view('pages.show_details')->with(compact('category_id','list_category','list_brand','details_product','related_product','meta_desc','meta_keywords','meta_title','url_canonical','slider','gallery'));
     }
 }

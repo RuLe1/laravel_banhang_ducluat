@@ -16,6 +16,7 @@ class Category_Product extends Model
     protected $filable = [
         'category_name',
         'category_desc',
+        'category_parent',
         'status',
     ];
     protected $primaryKey = 'id';

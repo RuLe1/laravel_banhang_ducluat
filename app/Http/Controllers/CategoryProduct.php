@@ -16,18 +16,21 @@ class CategoryProduct extends Controller
 {
     public function add_category_product(){
         $adminUser = Auth::guard('admin')->user();
-        return view('admin.category.add_category_product',['user'=>$adminUser]);
+        $category_product = Category_Product::where('category_parent',0)->orderBy('id','desc')->get();
+        return view('admin.category.add_category_product',['user'=>$adminUser])->with(compact('category_product'));
     }
     public function all_category_product(){
         $adminUser = Auth::guard('admin')->user();
-        $list_category = Category_Product::orderBy('id','desc')->get();
-        return view('admin.category.all_category_product',['user'=>$adminUser])->with(compact('list_category'));
+        $list_category = Category_Product::orderBy('category_parent','desc')->paginate(5);
+        $category = Category_Product::where('category_parent',0)->orderBy('id','desc')->get();
+        return view('admin.category.all_category_product',['user'=>$adminUser])->with(compact('list_category','category'));
     }
    
     public function save_category_product(Request $request){
         $data=array();
         $data['category_name'] = $request->category_product_name;
         $data['category_desc'] = $request->category_product_desc;
+        $data['category_parent'] = $request->category_product_parent;
         $data['meta_keywords'] = $request->category_product_keywords;
         $data['status'] = $request->category_product_status;
         DB::table('category_product')->insert($data);
@@ -44,14 +47,15 @@ class CategoryProduct extends Controller
     public function edit_category_product($id){
         $adminUser = Auth::guard('admin')->user();
         $edit_category = Category_Product::find($id)->where('id',$id)->get();
-
-        return view('admin.category.edit_category_product',['user'=>$adminUser])->with(compact('edit_category'));
+        $category_product = Category_Product::orderBy('category_parent','desc')->get();
+        return view('admin.category.edit_category_product',['user'=>$adminUser])->with(compact('edit_category','category_product'));
     }
     public function update_category_product(Request $request,$id){
         $data=array();
         $data['category_name'] = $request->category_product_name;
         $data['category_desc'] = $request->category_product_desc;
         $data['meta_keywords'] = $request->category_product_keywords;
+        $data['category_parent'] = $request->category_product_parent;
 
         DB::table('category_product')->where('id',$id)->update($data);
         return redirect()->back()->with('status','Cập nhật danh mục sản phẩm thành công');

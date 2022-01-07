@@ -45,7 +45,12 @@
                             <label for="exampleInputFile">Danh mục sản phẩm</label>
                             <select name="product_cate"class="form-control input-sm m=bot15">
                                 @foreach($cate_product as $key => $cate)
-                                <option value="{{$cate->id}}">{{$cate->category_name}}</option>
+                                    @foreach($cate_product as $key => $val2)
+                                        @if($val2->category_parent == $cate->id)
+                                            <option {{$val2->id == $cate->category_parent ? 'selected' :''}} value="{{$val2->id}}">==Danh mục con== {{$val2->category_name}}</option>
+                                        @endif
+                                    @endforeach
+                                <!-- <option value="{{$cate->id}}">{{$cate->category_name}}</option> -->
                                 @endforeach
                             </select>
                         </div>

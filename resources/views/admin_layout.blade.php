@@ -9,6 +9,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- bootstrap-css -->
 <link rel="stylesheet" href="{{asset('backend/css/bootstrap.min.css')}}" >
 <!-- //bootstrap-css -->
+<meta name="csrf-token" content="{{csrf_token()}}">
 <!-- Custom CSS -->
 <link href="{{asset('backend/css/style.css')}}" rel='stylesheet' type='text/css' />
 <link href="{{asset('backend/css/style-responsive.css')}}" rel="stylesheet"/>
@@ -184,6 +185,110 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script type="text/javascript">
         CKEDITOR.replace('ckeditor_product_desc1'); 
         CKEDITOR.replace('ckeditor_product_desc2'); 	    
+</script>
+<script type="text/javascript"> 
+    $(document).ready(function(){
+        load_gallery();
+        function load_gallery(){
+            var pro_id = $('.pro_id').val();
+            var _token = $('input[name="_token"]').val();
+            //alert(pro_id);
+            $.ajax({
+                url:"{{url('/select-gallery')}}",
+                method: "POST",
+                data:{
+                    pro_id:pro_id,
+                    _token:_token,
+                },
+                success:function(data){
+                    $('#load_gallery').html(data);
+                    
+                }
+            });
+        }
+        $('#file').change(function(){
+            var error = '';
+            var files = $('#file')[0].files;
+            if(files.length > 5){
+                error+='<p>Bạn chọn tối đa 5 ảnh</p>';
+            }else if(files.length == ''){
+                error+='<p>Bạn không được bỏ trống ảnh</p>';
+            }else if(files[0].size > 2000000){ // láy ra kích thước ảnh byte $("#selector")[0].files[0].size
+                error+='<p>File ảnh không được lớn hơn 2MB</p>';
+            }
+            if(error == ''){
+
+            }else{
+                $('#file').val();
+                $('#load_gallery').html('<span class="text-danger">'+error+'</span>');
+                return false;
+            }
+        });
+        $(document).on('blur','.edit_gal_name',function(){
+           var gal_id = $(this).data('gal_id');
+           var gal_text = $(this).text();
+           var _token = $('input[name="_token"]').val();
+           $.ajax({
+                url:"{{url('/update-gallery-name')}}",
+                method: "POST",
+                data:{
+                    gal_id:gal_id,
+                    gal_text:gal_text,
+                    _token:_token,
+                },
+                success:function(data){
+                    load_gallery();
+                    $('#error_gallery').html(data);
+                    
+                }
+            });
+          
+        });
+        $(document).on('click','.delete-gallery',function(){
+           var gal_id = $(this).data('gal_id');
+           var _token = $('input[name="_token"]').val();
+           if(confirm('Bạn muốn xóa ảnh này không?')){
+           $.ajax({
+                url:"{{url('/delete-gallery')}}",
+                method: "POST",
+                data:{
+                    gal_id:gal_id,
+                    _token:_token,
+                },
+                success:function(data){
+                    load_gallery();
+                    $('#error_gallery').html(data);
+                    
+                }
+            });
+            }
+        });
+        $(document).on('change','.file_image',function(){
+           var gal_id = $(this).data('gal_id');
+           var image = document.getElementById('file-'+gal_id).files[0];
+           var form_data = new FormData();
+           form_data.append("file",document.getElementById('file-'+gal_id).files[0]);
+           form_data.append("gal_id",gal_id);
+
+           var _token = $('input[name="_token"]').val();
+           $.ajax({
+                url:"{{url('/update-gallery-image')}}",
+                method: "POST",
+                headers:{
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data:form_data,
+
+                contentType:false,
+                cache:false,
+                processData:false,
+
+                success:function(data){
+                    load_gallery();                    
+                }
+            });
+        });
+    });
 </script>
 <script type="text/javascript">
     $('.update_quantity_order').click(function(){

@@ -25,6 +25,8 @@
 	<link href="{{asset('frontend/css/main.css')}}" rel="stylesheet">
 	<link href="{{asset('frontend/css/responsive.css')}}" rel="stylesheet">
 	<link href="{{asset('frontend/css/sweetalert.css')}}" rel="stylesheet">
+	<link href="{{asset('frontend/css/lightslider.css')}}" rel="stylesheet">
+	<link href="{{asset('frontend/css/lightslider.min.css')}}" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
@@ -231,14 +233,29 @@
 						<h2>Danh mục sản phẩm</h2>				
 						<div class="panel-group category-products" id="accordian">
 							@foreach($list_category as $key =>$cate)
+							@if($cate->category_parent == 0)
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<h4 class="panel-title">
-										<a href="{{URL::to('/danh-muc-san-pham/'.$cate->id)}}">{{$cate->category_name}}</a>
+										<a data-toggle="collapse" data-parent="#accordian"href="#{{$cate->id}}" href="{{URL::to('/danh-muc-san-pham/'.$cate->id)}}">
+											<span class="badge pull-right"><i class="fa fa-plus"></i></span>{{$cate->category_name}}
+										</a>
 									</h4>
 								</div>
+								<div id="{{$cate->id}}" class="panel-collapse collapse">
+									<div class="panel-body">
+										<ul>
+											@foreach($list_category as $key => $cate_sub)
+												@if($cate_sub->category_parent == $cate->id)
+													<li><a href="{{URL::to('/danh-muc-san-pham/'.$cate_sub->id)}}">{{$cate_sub->category_name}}</a></li>
+												@endif
+											@endforeach
+										</ul>
+									</div>
+								</div>
 							</div>
-							@endforeach	
+							@endif
+							@endforeach
 						</div>
 						<div class="brands_products">
 							<h2>Thương hiệu sản phẩm</h2>
@@ -424,6 +441,9 @@
     <script src="{{asset('frontend/js/jquery.prettyPhoto.js')}}"></script>
     <script src="{{asset('frontend/js/main.js')}}"></script>
 	<script src="{{asset('frontend/js/sweetalert.js')}}"></script>
+	<script src="{{asset('frontend/js/lightslider.js')}}"></script>
+	<script src="{{asset('frontend/js/lightslider.min.js')}}"></script>
+
 	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 	<div id="fb-root"></div>
 	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v12.0&appId=1529134097448744&autoLogAppEvents=1" nonce="J8rgKCHW"></script>
@@ -457,6 +477,24 @@
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
     </script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#imageGallery').lightSlider({
+				gallery:true,
+				item:1,
+				loop:true,
+				thumbItem:3,
+				slideMargin:0,
+				enableDrag: false,
+				currentPagerPosition:'left',
+				onSliderLoad: function(el) {
+					el.lightGallery({
+						selector: '#imageGallery .lslide'
+					});
+				}   
+			});  
+  		});
+	</script>
 	<script type="text/javascript">
 		$(document).ready(function(){
             $('.send_order').click(function(){

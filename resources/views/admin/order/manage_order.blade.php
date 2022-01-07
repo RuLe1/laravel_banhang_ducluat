@@ -47,7 +47,7 @@
             </td>
             <td>
               <a href="{{URL::to('/view-order/'.$ord->order_code)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-eye text-primary text-active"></i></a>
-              <a onclick="return confirm('Bạn chắc chắn muốn xóa thương hiệu {{$ord->order_code}} không?')"href="{{URL::to('/delete-order/'.$ord->order_code)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-times text-danger text"></i></a>
+              <a onclick="return confirm('Bạn chắc chắn muốn xóa đơn hàng {{$ord->order_code}} không?')"href="{{URL::to('/delete-order/'.$ord->order_code)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-times text-danger text"></i></a>
             </td>
           </tr>  
           @endforeach     

@@ -13,6 +13,7 @@ use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\GalleryController;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -142,6 +143,13 @@ Route::middleware(['admin'])->group(function(){
     Route::get('/delete-slider/{id}',[SliderController::class,'delete_slider']);
     Route::get('/edit-slider/{id}',[SliderController::class,'edit_slider']);
     Route::post('/update-slider/{id}',[SliderController::class,'update_slider']);
+    //Gallery
+    Route::get('/add-gallery/{id}',[GalleryController::class,'add_gallery']);
+    Route::post('/select-gallery',[GalleryController::class,'select_gallery']);
+    Route::post('/insert-gallery/{pro_id}',[GalleryController::class,'insert_gallery']);
+    Route::post('/update-gallery-name',[GalleryController::class,'update_gallery_name']);
+    Route::post('/delete-gallery',[GalleryController::class,'delete_gallery']);
+    Route::post('/update-gallery-image',[GalleryController::class,'update_gallery_image']);
 
 });
 //Login  google

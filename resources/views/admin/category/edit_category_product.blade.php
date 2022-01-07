@@ -34,6 +34,22 @@
                             {{$edit->meta_keywords}}
                             </textarea>
                         </div>
+                        <div class="form-group">
+                            <label for="exampleInputFile">Thuộc danh mục</label>
+                            <select name="category_product_parent"class="form-control input-sm m=bot15">
+                                <option value="0">--------Danh mục cha--------</option>
+                                @foreach($category_product as $key => $val)
+                                    @if($val->category_parent == 0)
+                                        <option {{$val->id == $edit->category_parent ? 'selected' :''}} value="{{$val->id}}">{{$val->category_name}}</option>
+                                    @endif
+                                    @foreach($category_product as $key => $val2)
+                                        @if($val2->category_parent == $val->id)
+                                            <option {{$val2->id == $edit->category_parent ? 'selected' :''}} value="{{$val2->id}}">==Danh mục con=={{$val2->category_name}}</option>
+                                        @endif
+                                    @endforeach
+                                @endforeach
+                            </select>
+                        </div>
                         <button type="submit"name="update_category_product" class="btn btn-info">Cập nhật</button>
                     </form>
                 </div>

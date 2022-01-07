@@ -30,6 +30,15 @@
                             <textarea style="resize:none" rows="5" class="form-control" name="category_product_keywords" id="exampleInputPassword1" placeholder="Mô tả danh mục"required></textarea>
                         </div>
                         <div class="form-group">
+                            <label for="exampleInputFile">Thuộc danh mục</label>
+                            <select name="category_product_parent"class="form-control input-sm m=bot15">
+                                <option value="0">----Danh mục cha----</option>
+                                @foreach($category_product as $key => $val)
+                                <option value="{{$val->id}}">{{$val->category_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="exampleInputFile">Hiển thị</label>
                             <select name="category_product_status"class="form-control input-sm m=bot15">
                                 <option value="0">Ẩn</option>

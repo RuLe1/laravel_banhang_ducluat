@@ -26,6 +26,7 @@
 								<input type="hidden"class="cart_product_name_{{$pro->id}}"value="{{$pro->product_name}}">
 								<input type="hidden"class="cart_product_image_{{$pro->id}}"value="{{$pro->product_image}}">
 								<input type="hidden"class="cart_product_price_{{$pro->id}}"value="{{$pro->product_price}}">
+								<input type="hidden"class="cart_product_quantity_{{$pro->id}}"value="{{$pro->product_quantity}}">
 								<input type="hidden"class="cart_product_qty_{{$pro->id}}"value="1">
 								<button type="button"name="add_to_cart"data-id_product="{{$pro->id}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm giỏ hàng</a>
 							</div>

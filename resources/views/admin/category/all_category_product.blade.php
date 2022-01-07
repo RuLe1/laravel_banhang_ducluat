@@ -43,18 +43,30 @@
               </label>
             </th>
             <th><b>Tên danh mục</b></th>
+            <th><b>Thuộc danh mục</b></th>
             <th><b>Tình trạng</b></th>
             <th><b>Ngày tạo</b></th>
             <th style="width:30px;"></th>
           </tr>
         </thead>
         <tbody>
+          @php  $i = 1 @endphp
           @foreach($list_category as $key => $cate)
           <tr>
-            <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
+            <td>{{$i++}}</td>
             <td>{{$cate->category_name}}</td>
             <td>
-             
+              @if($cate->category_parent == 0)
+                <span style="color:red">Danh mục cha</span>
+              @else  
+                @foreach($category as $key => $cate_sub)
+                  @if($cate_sub->id == $cate->category_parent)
+                    <span style="color:blue">{{$cate_sub->category_name}}</span>
+                  @endif
+                @endforeach
+              @endif
+            </td>
+            <td>
               @if($cate->status == 0)
                 <a href="{{URL::to('/unactive-category-product/'.$cate->id)}}"><span class="text-ellipsis text-danger">Ẩn</span></a>
               @else
@@ -67,7 +79,7 @@
               <a onclick="return confirm('Bạn chắc chắn muốn xóa danh mục {{$cate->category_name}} không?')"href="{{URL::to('/delete-category-product/'.$cate->id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-times text-danger text"></i></a>
             </td>
           </tr>  
-          @endforeach     
+          @endforeach
         </tbody>
       </table>
     </div>
@@ -78,12 +90,7 @@
         </div>
         <div class="col-sm-7 text-right text-center-xs">                
           <ul class="pagination pagination-sm m-t-none m-b-none">
-            <li><a href=""><i class="fa fa-chevron-left"></i></a></li>
-            <li><a href="">1</a></li>
-            <li><a href="">2</a></li>
-            <li><a href="">3</a></li>
-            <li><a href="">4</a></li>
-            <li><a href=""><i class="fa fa-chevron-right"></i></a></li>
+            {!!$list_category->links('pagination::bootstrap-4')!!}
           </ul>
         </div>
       </div>

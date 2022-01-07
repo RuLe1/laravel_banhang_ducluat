@@ -51,7 +51,12 @@
                                     @if($cate->id == $edit->category_id)
                                         <option selected value="{{$cate->id}}">{{$cate->category_name}}</option>
                                     @else
-                                    <option value="{{$cate->id}}">{{$cate->category_name}}</option>
+                                        @foreach($cate_product as $key => $val2)
+                                            @if($val2->category_parent == $cate->id)
+                                                <option {{$val2->id == $edit->category_parent ? 'selected' :''}} value="{{$val2->id}}">==Danh mục con=={{$val2->category_name}}</option>
+                                            @endif
+                                        @endforeach
+                                    <!-- <option value="{{$cate->id}}">{{$cate->category_name}}</option> -->
                                     @endif
                                 @endforeach
                             </select>
