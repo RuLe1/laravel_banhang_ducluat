@@ -13,7 +13,7 @@ class Slider extends Model
 	    'created_at',
 	    'updated_at'
 	];
-    protected $filable = [
+    protected $fillable = [
         'slider_name',
         'slider_image',
         'slider_desc',

@@ -13,7 +13,7 @@ class Feeship extends Model
 	    'created_at',
 	    'updated_at'
 	];
-    protected $filable = [
+    protected $fillable = [
         'fee_matp',
         'fee_maqh',
         'fee_xaid',

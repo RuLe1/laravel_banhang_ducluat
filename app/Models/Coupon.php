@@ -13,7 +13,7 @@ class Coupon extends Model
 	    'created_at',
 	    'updated_at'
 	];
-    protected $filable = [
+    protected $fillable = [
         'coupon_name',
         'coupon_code',
         'coupon_time',

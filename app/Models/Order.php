@@ -13,7 +13,7 @@ class Order extends Model
 	    'created_at',
 	    'updated_at'
 	];
-    protected $filable = [
+    protected $fillable = [
         'order_code',
         'customer_id',
         'shipping_id',

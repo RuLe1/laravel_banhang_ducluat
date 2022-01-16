@@ -82,6 +82,16 @@
           @endforeach
         </tbody>
       </table>
+      <!---- Import,export data bằng file Exel --->
+      <form action="{{url('/import-csv-category')}}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <input type="file" name="file" accept=".xlsx"><br>
+        <input type="submit" value="Import Excel" name="import_csv" class="btn btn-warning">
+      </form>
+      <form action="{{url('/export-csv-category')}}" method="POST">
+        @csrf
+        <input type="submit" value="Export Excel" name="export_csv" class="btn btn-success">
+      </form>
     </div>
     <footer class="panel-footer">
       <div class="row">       

@@ -13,8 +13,9 @@ class Category_Product extends Model
 	    'created_at',
 	    'updated_at'
 	];
-    protected $filable = [
+    protected $fillable = [
         'category_name',
+        'meta_keywords',
         'category_desc',
         'category_parent',
         'status',

@@ -13,7 +13,7 @@ class Province extends Model
 	    'created_at',
 	    'updated_at'
 	];
-    protected $filable = [
+    protected $fillable = [
         'name_quanhuyen',
         'type',
         'matp'

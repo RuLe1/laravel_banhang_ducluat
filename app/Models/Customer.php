@@ -13,7 +13,7 @@ class Customer extends Model
 	    'created_at',
 	    'updated_at'
 	];
-    protected $filable = [
+    protected $fillable = [
         'customer_name',
         'customer_email',
         'customer_password',

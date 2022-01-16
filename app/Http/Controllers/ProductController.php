@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Gallery;
 use File;
+use App\Imports\ImportProduct;
+use App\Exports\ExportProduct;
+use Excel;
 class ProductController extends Controller
 {
     public function add_product(){
@@ -105,6 +108,14 @@ class ProductController extends Controller
     public function delete_product($id){
         Product::where('id',$id)->delete();
         return redirect::to('all-product')->with('status','Bạn đã xóa sản phẩm thành công');
+    }
+    public function export_csv_product(){
+        return Excel::download(new ExportProduct , 'product.xlsx');
+    }
+    public function import_csv_product(Request $request){
+        $path = $request->file('file')->getRealPath();
+        Excel::import(new ImportProduct,$path);
+        return back();
     }
 //end of Admin page
     public function details_product(Request $request,$id){

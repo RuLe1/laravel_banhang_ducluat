@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use App\Imports\ExcelImports;
+use App\Exports\ExcelExports;
+use Excel;
 
 class CategoryProduct extends Controller
 {
@@ -63,6 +66,14 @@ class CategoryProduct extends Controller
     public function delete_category_product($id){
         Category_Product::where('id',$id)->delete();
         return redirect::to('all-category-product')->with('status','Bạn đã xóa danh mục thành công');
+    }
+    public function export_csv_category(){
+        return Excel::download(new ExcelExports , 'category_product.xlsx');
+    }
+    public function import_csv_category(Request $request){
+        $path = $request->file('file')->getRealPath();
+        Excel::import(new ExcelImports,$path);
+        return back();
     }
     //end function for Admin page
     public function show_category(Request $request,$id){

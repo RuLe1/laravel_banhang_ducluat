@@ -89,6 +89,10 @@ Route::middleware(['admin'])->group(function(){
 
     Route::get('/unactive-category-product/{id}',[CategoryProduct::class,'unactive_category_product']);
     Route::get('/active-category-product/{id}',[CategoryProduct::class,'active_category_product']);
+
+    Route::post('/export-csv-category',[CategoryProduct::class,'export_csv_category']);
+    Route::post('/import-csv-category',[CategoryProduct::class,'import_csv_category']);
+
     //brand product
     Route::get('/add-brand-product',[BrandProduct::class,'add_brand_product']);
     Route::get('/all-brand-product',[BrandProduct::class,'all_brand_product']);
@@ -111,6 +115,9 @@ Route::middleware(['admin'])->group(function(){
 
     Route::get('/unactive-product/{id}',[ProductController::class,'unactive_product']);
     Route::get('/active-product/{id}',[ProductController::class,'active_product']);
+
+    Route::post('/export-csv-product',[ProductController::class,'export_csv_product']);
+    Route::post('/import-csv-product',[ProductController::class,'import_csv_product']);
     //manage order
     Route::get('/manage-order',[OrderController::class,'manage_order']);
     Route::get('/view-order/{order_code}',[OrderController::class,'view_order']);

@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '87cfd20c6d93263aaeb89c41fff4d1565cc0f60a',
+    'reference' => 'a5527463404f8e2957b4fffd4badba584d9b3bde',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -132,6 +132,15 @@
       array (
       ),
       'reference' => '0dbf5d78455d4d6a41d186da50adc1122ec066f4',
+    ),
+    'ezyang/htmlpurifier' => 
+    array (
+      'pretty_version' => 'v4.14.0',
+      'version' => '4.14.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '12ab42bd6e742c70c0a52f7b82477fcd44e64b75',
     ),
     'facade/flare-client-php' => 
     array (
@@ -535,7 +544,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '87cfd20c6d93263aaeb89c41fff4d1565cc0f60a',
+      'reference' => 'a5527463404f8e2957b4fffd4badba584d9b3bde',
     ),
     'laravel/sail' => 
     array (
@@ -627,6 +636,42 @@
       ),
       'reference' => '88dd16b0cff68eb9167bfc849707d2c40ad91ddc',
     ),
+    'maatwebsite/excel' => 
+    array (
+      'pretty_version' => '3.1.35',
+      'version' => '3.1.35.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '6f171c8b79e1c0fb254f3ec40f7a11ac79289eaa',
+    ),
+    'maennchen/zipstream-php' => 
+    array (
+      'pretty_version' => '2.1.0',
+      'version' => '2.1.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'c4c5803cc1f93df3d2448478ef79394a5981cc58',
+    ),
+    'markbaker/complex' => 
+    array (
+      'pretty_version' => '3.0.1',
+      'version' => '3.0.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'ab8bc271e404909db09ff2d5ffa1e538085c0f22',
+    ),
+    'markbaker/matrix' => 
+    array (
+      'pretty_version' => '3.0.0',
+      'version' => '3.0.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'c66aefcafb4f6c269510e9ac46b82619a904c576',
+    ),
     'mobiledetect/mobiledetectlib' => 
     array (
       'pretty_version' => '2.8.37',
@@ -673,6 +718,15 @@
       array (
         0 => '1.10.2',
       ),
+    ),
+    'myclabs/php-enum' => 
+    array (
+      'pretty_version' => '1.8.3',
+      'version' => '1.8.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'b942d263c641ddb5190929ff840c68f78713e937',
     ),
     'nesbot/carbon' => 
     array (
@@ -781,6 +835,15 @@
       array (
       ),
       'reference' => 'a12f7e301eb7258bb68acd89d4aefa05c2906cae',
+    ),
+    'phpoffice/phpspreadsheet' => 
+    array (
+      'pretty_version' => '1.21.0',
+      'version' => '1.21.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '1a359d2ccbb89c05f5dffb32711a95f4afc67964',
     ),
     'phpoption/phpoption' => 
     array (
@@ -956,8 +1019,8 @@
     array (
       'provided' => 
       array (
-        0 => '1.0|2.0',
-        1 => '1.0.0 || 2.0.0 || 3.0.0',
+        0 => '1.0.0 || 2.0.0 || 3.0.0',
+        1 => '1.0|2.0',
       ),
     ),
     'psr/simple-cache' => 

@@ -13,7 +13,7 @@ class Brand_Product extends Model
 	    'created_at',
 	    'updated_at'
 	];
-    protected $filable = [
+    protected $fillable = [
         'brand_name',
         'brand_desc',
         'status'

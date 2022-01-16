@@ -13,7 +13,7 @@ class OrderDetails extends Model
 	    'created_at',
 	    'updated_at'
 	];
-    protected $filable = [
+    protected $fillable = [
         'order_code',
         'product_id',
         'product_name',

@@ -13,7 +13,7 @@ class Shipping extends Model
 	    'created_at',
 	    'updated_at'
 	];
-    protected $filable = [
+    protected $fillable = [
         'shipping_name',
         'shipping_address',
         'shipping_phone',
