@@ -40,6 +40,7 @@ Route::get('/danh-muc-san-pham/{id}',[CategoryProduct::class,'show_category']);
 Route::get('/thuong-hieu-san-pham/{id}',[BrandProduct::class,'show_brand']);
 //chi tiết sản phẩm
 Route::get('/chi-tiet-san-pham/{id}',[ProductController::class,'details_product']);
+Route::get('/tag/{product_tag}',[ProductController::class,'tag']);
 //Cart
 Route::post('/save-cart',[CartController::class,'save_cart']);
 Route::get('/show-cart',[CartController::class,'show_cart']);

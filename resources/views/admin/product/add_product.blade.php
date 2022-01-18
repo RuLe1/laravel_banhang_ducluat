@@ -34,6 +34,10 @@
                             <input type="file"name="product_image" class="form-control" id="exampleInputEmail1" placeholder="Hình ảnh sản phẩm"required>
                         </div>
                         <div class="form-group">
+                            <label for="exampleInputEmail1">Tags sản phẩm</label>
+                            <input type="text"name="product_tags"data-role="tagsinput" class="form-control"required>
+                        </div>
+                        <div class="form-group">
                             <label for="exampleInputPassword1">Mô tả sản phẩm</label>
                             <textarea id="ckeditor_product_desc1" style="resize:none" rows="5" class="form-control" name="product_desc" id="exampleInputPassword1" placeholder="Mô tả sản phẩm"required></textarea>
                         </div>

@@ -49,6 +49,35 @@
             <p><b>Danh mục:</b> {{$value->categoryproduct->category_name}}</p>
             <a href=""><img src="images/product-details/share.png" class="share img-responsive"  alt="" /></a>
         </div>
+        <div class="product-tags">
+            <style type="text/css">
+                a.tags_style{
+                    margin: 3px 2px;
+                    border: 1px solid;
+
+                    height: auto;
+                    background: #428bca;
+                    color: #ffff;
+                    padding: 0px;
+                }
+                a.tags_style:hover{
+                    background: black;
+                }
+            </style>
+            <fieldset>
+                <legend>Tags</legend>
+                <p><i class="fa fa-tag"></i>
+                    @php  
+                        $tags = $value->product_tags;
+                        $tags = explode(",",$tags);
+                    @endphp
+                    <!-- //dùng hàm Str::slug() của Laravel-->
+                    @foreach($tags as $tag)
+                        <a href="{{url('/tag/'.Str::slug($tag))}}"name="product_tag"class="tags_style">{{$tag}}</a>
+                    @endforeach
+                </p>
+            </fieldset>
+        </div>
     </div>
 </div>
 <div class="category-tab shop-details-tab"><!--category-tab-->

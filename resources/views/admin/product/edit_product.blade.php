@@ -36,6 +36,10 @@
                             <img src="{{URL::to('public/uploads/product/'.$edit->product_image)}}"width="150"height="150">
                         </div>
                         <div class="form-group">
+                            <label for="exampleInputEmail1">Tags sản phẩm</label>
+                            <input name="product_tags" value="{{$edit->product_tags}}"class="form-control" id="exampleInputEmail1">
+                        </div>
+                        <div class="form-group">
                             <label for="exampleInputPassword1">Mô tả sản phẩm</label>
                             <textarea style="resize:none" rows="5" class="form-control"name="product_desc" id="ckeditor_product_desc2" placeholder="Mô tả sản phẩm">{{$edit->product_desc}}
                             </textarea>

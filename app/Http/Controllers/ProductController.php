@@ -38,6 +38,7 @@ class ProductController extends Controller
         $data['category_id'] = $request->product_cate;
         $data['brand_id'] = $request->product_brand;
         $data['status'] = $request->product_status;
+        $data['product_tags'] = $request->product_tags;
         //thêm ảnh vào folder 
         $path = 'public/uploads/product/';
         $path_gallery = 'public/uploads/gallery/';
@@ -87,6 +88,8 @@ class ProductController extends Controller
         $product->category_id = $data['product_cate'];
         $product->brand_id = $data['product_brand'];
         $product->status = $data['product_status'];
+        $product->product_tags = $data['product_tags'];
+
          //thêm ảnh vào folder 
         $get_image = $request->product_image;
         if($get_image){
@@ -140,5 +143,8 @@ class ProductController extends Controller
         ->whereNotIn('product.id',[$id])->get();
     
         return view('pages.show_details')->with(compact('category_id','list_category','list_brand','details_product','related_product','meta_desc','meta_keywords','meta_title','url_canonical','slider','gallery'));
+    }
+    public function tag(Request $request,$product_tag){
+        echo 'Trả về sản phẩm bài viết liên quan đến từ: '.$request->product_tag;
     }
 }
