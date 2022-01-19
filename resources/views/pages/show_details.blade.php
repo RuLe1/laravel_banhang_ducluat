@@ -2,6 +2,13 @@
 @section('content')
 @foreach($details_product as $key => $value)
 <div class="product-details">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{'/'}}">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="{{url('/danh-muc-san-pham/'.$category_id)}}">{{$value->categoryproduct->category_name}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{$value->product_name}}</li>
+        </ol>
+    </nav>
     <div class="col-sm-5">
         <ul id="imageGallery">
             @foreach($gallery as $key=>$gal)
@@ -28,6 +35,22 @@
             <span>
                 <h3><span>{{number_format($value->product_price)}}<sup>đ</sup></span></h3>
                 <label>Số lượng:</label>
+                @if(($value->product_quantity) == 0)
+
+                <input  type="number"disabled name="qty" class="cart_product_qty_{{$value->id}}" min="1"value="1" />
+
+				<input type="hidden" value="{{$value->id}}" class="cart_product_id_{{$value->id}}">
+                <input type="hidden" value="{{$value->product_name}}" class="cart_product_name_{{$value->id}}">
+                <input type="hidden" value="{{$value->product_image}}" class="cart_product_image_{{$value->id}}">
+                <input type="hidden" value="{{$value->product_price}}" class="cart_product_price_{{$value->id}}">
+                <input disabled type="hidden" value="{{$value->product_quantity}}" class="cart_product_quantity_{{$value->id}}">
+                <input name="productid_hidden" type="hidden"value="{{$value->id}}"/>
+                
+                <button type="button"disabled class="btn btn-fefault add-to-cart"data-id_product="{{$value->id}}" name="add-to-cart">
+                    <i class="fa fa-shopping-cart"></i>
+                   Thêm giỏ hàng
+                </button>
+                @else
                 <input type="number" name="qty" class="cart_product_qty_{{$value->id}}" min="1"value="1" />
 
 				<input type="hidden" value="{{$value->id}}" class="cart_product_id_{{$value->id}}">
@@ -35,15 +58,16 @@
                 <input type="hidden" value="{{$value->product_image}}" class="cart_product_image_{{$value->id}}">
                 <input type="hidden" value="{{$value->product_price}}" class="cart_product_price_{{$value->id}}">
                 <input type="hidden" value="{{$value->product_quantity}}" class="cart_product_quantity_{{$value->id}}">
-
                 <input name="productid_hidden" type="hidden"value="{{$value->id}}"/>
+                
                 <button type="button" class="btn btn-fefault add-to-cart"data-id_product="{{$value->id}}" name="add-to-cart">
                     <i class="fa fa-shopping-cart"></i>
                    Thêm giỏ hàng
                 </button>
+                @endif
             </span>
             </form>
-            <p><b>Tình trạng:</b> Còn hàng</p>
+            <p>Số lượng kho còn: <b style="font-size: medium;">{{$value->product_quantity}}</b> sản phẩm có sẵn</p>
             <p><b>Điều kiện:</b> Mới 100%</p>
             <p><b>Thương hiệu:</b> {{$value->brandproduct->brand_name}}</p>
             <p><b>Danh mục:</b> {{$value->categoryproduct->category_name}}</p>
@@ -73,7 +97,7 @@
                     @endphp
                     <!-- //dùng hàm Str::slug() của Laravel-->
                     @foreach($tags as $tag)
-                        <a href="{{url('/tag/'.Str::slug($tag))}}"name="product_tag"class="tags_style">{{$tag}}</a>
+                        <a href="{{url('/tag/'.Str::slug($tag))}}"class="tags_style">{{$tag}}</a>
                     @endforeach
                 </p>
             </fieldset>

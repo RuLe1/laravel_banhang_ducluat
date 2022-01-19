@@ -45,7 +45,7 @@
 							@endphp
 						<tr>
 							<td class="cart_product">
-							    <img src="{{asset('public/uploads/product/'.$cart['product_image'])}}" with="50"height="100"alt="{{$cart['product_name']}}">
+							    <a href="{{url('/chi-tiet-san-pham/'.$cart['id'])}}"><img src="{{asset('public/uploads/product/'.$cart['product_image'])}}" with="50"height="100"alt="{{$cart['product_name']}}"></a>
 							</td>
 							<td class="cart_description">
 								<h4><a href=""></a></h4>

@@ -961,20 +961,20 @@ h2.title {
 }
 
 .add-to-cart {
-    background: #F5F5ED;
+    background: rgb(26, 148, 255);
     border: 0 none;
     border-radius: 0;
-    color: #696763;
+    color: #fff;
     font-family: 'Roboto', sans-serif;
     font-size: 15px;
     margin-bottom: 25px;
 }
 
 .add-to-cart:hover {
-    background: rgb(26, 148, 255);
+    background: #696763;
     border: 0 none;
     border-radius: 0;
-    color: #FFFFFF;
+    color: #fff;
 }
 
 .add-to {
@@ -983,11 +983,6 @@ h2.title {
 
 .add-to-cart i {
     margin-right: 5px;
-}
-
-.add-to-cart:hover {
-    background: rgb(26, 148, 255);
-    color: #FFFFFF;
 }
 
 .choose {

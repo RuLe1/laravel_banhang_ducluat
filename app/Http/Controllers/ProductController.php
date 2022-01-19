@@ -145,6 +145,20 @@ class ProductController extends Controller
         return view('pages.show_details')->with(compact('category_id','list_category','list_brand','details_product','related_product','meta_desc','meta_keywords','meta_title','url_canonical','slider','gallery'));
     }
     public function tag(Request $request,$product_tag){
-        echo 'Trả về sản phẩm bài viết liên quan đến từ: '.$request->product_tag;
+        //seo
+        $meta_desc = "Chuyên order KELIFAN cao cấp chính hãng, mới nhất, đẹp nhất, khác biệt nhất";
+        $meta_keywords = "thời trang giới trẻ, thời trang hiện đại";
+        $meta_title = "E-CLOSET | THỜI TRANG HIỆN ĐẠI | THỜI TRANG CAO CẤP";
+        $url_canonical = $request->url();
+        //--seo
+        $slider = Slider::orderBy('id','DESC')->where('status',1)->take(4)->get();
+        $list_category = Category_Product::where('status',1)->orderBy('id','desc')->get();
+        $list_brand = Brand_Product::where('status',1)->orderBy('id','desc')->get();
+
+        $tag = str_replace("-"," ",$product_tag);
+        $pro_tag = Product::where('status',1)->where('product_name','LIKE','%'.$tag.'%')->orWhere('product_tags','LIKE','%'.$tag.'%')->get();
+       
+        return view('pages.tag')->with(compact('list_brand','list_category','meta_desc','meta_keywords','meta_title','url_canonical','slider','tag','pro_tag'));
+    
     }
 }

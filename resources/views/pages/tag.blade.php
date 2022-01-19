@@ -1,8 +1,8 @@
 @extends('layout')
 @section('content')
 <div class="features_items"><!--features_items-->
-		<h2 class="title text-center">Sản phẩm mới nhất</h2>
-		@foreach($list_product as $key =>$pro)
+		<h2 class="title text-center">Tag tìm kiếm:{{$tag}}</h2>
+		@foreach($pro_tag as $key =>$pro)
 		<div class="col-sm-4">
 			<div class="product-image-wrapper">
 				<div class="single-products">
@@ -28,15 +28,10 @@
 								<input type="hidden"class="cart_product_price_{{$pro->id}}"value="{{$pro->product_price}}">
 								<input type="hidden"class="cart_product_quantity_{{$pro->id}}"value="{{$pro->product_quantity}}">
 								<input type="hidden"class="cart_product_qty_{{$pro->id}}"value="1">
-								@if(($pro->product_quantity) == 0)
-								<button disabled type="button"class="btn btn-default add-to-cart"data-id_product="{{$pro->id}}" name="add_to_cart">
-									<i class="fa fa-shopping-cart"></i>Thêm giỏ hàng
-								</button>
-								@else
+
 								<button type="button"class="btn btn-default add-to-cart"data-id_product="{{$pro->id}}" name="add_to_cart">
 									<i class="fa fa-shopping-cart"></i>Thêm giỏ hàng
 								</button>
-								@endif
 							</form>
 							</div>											
 						</div>

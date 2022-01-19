@@ -618,7 +618,7 @@
                 var cart_product_qty = $('.cart_product_qty_' + id).val();
                 var _token = $('input[name="_token"]').val();
 				if(parseInt(cart_product_qty) > parseInt(cart_product_quantity)){
-					alert('Làm ơn đặt nhỏ hơn ' + cart_product_quantity);
+					alert('Vui lòng đặt số lượng nhỏ hơn ' + cart_product_quantity +' sản phẩm');
 				}else{
                 $.ajax({
                     url: "{{url('/add-cart-ajax')}}",
