@@ -23,11 +23,18 @@ class Product extends Model
         'product_content',
         'product_image',
         'product_tags',
+        'product_sold',
         'status',
     ];
     protected $primaryKey = 'id';
     protected $table = 'product';
 
+    // public function productbelongtocategory(){
+    //     return $this->belongsTo('App\Models\Category','category_id','id');
+    // }
+    // public function productbelongtobrand(){
+    //     return $this->belongsTo('App\Models\Brand','brand_id','id');
+    // }
     public function categoryproduct(){
         return $this->belongsTo('App\Models\Category_Product','category_id','id');
     }

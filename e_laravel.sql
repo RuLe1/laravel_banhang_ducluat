@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 27, 2021 lúc 04:45 PM
--- Phiên bản máy phục vụ: 10.4.18-MariaDB
--- Phiên bản PHP: 7.3.27
+-- Máy chủ: localhost
+-- Thời gian đã tạo: Th7 14, 2022 lúc 11:45 AM
+-- Phiên bản máy phục vụ: 10.4.22-MariaDB
+-- Phiên bản PHP: 7.4.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -104,6 +104,7 @@ CREATE TABLE `category_product` (
   `category_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `meta_keywords` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `category_desc` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_parent` int(11) NOT NULL,
   `status` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -113,10 +114,16 @@ CREATE TABLE `category_product` (
 -- Đang đổ dữ liệu cho bảng `category_product`
 --
 
-INSERT INTO `category_product` (`id`, `category_name`, `meta_keywords`, `category_desc`, `status`, `created_at`, `updated_at`) VALUES
-(9, 'Áo cổ điển', 'áo cổ điển', 'tốt', 1, NULL, NULL),
-(11, 'Váy xòe', 'váy xòe', 'ok', 1, NULL, NULL),
-(12, 'Đầm', 'đầm', 'good', 1, NULL, NULL);
+INSERT INTO `category_product` (`id`, `category_name`, `meta_keywords`, `category_desc`, `category_parent`, `status`, `created_at`, `updated_at`) VALUES
+(9, 'Áo cổ điển', 'áo cổ điển', 'tốt', 0, 1, NULL, NULL),
+(11, 'Váy xòe', 'váy xòe', 'ok', 0, 1, NULL, NULL),
+(12, 'Đầm', 'đầm', 'good', 0, 1, NULL, NULL),
+(13, 'Đầm trắng', 'đầm trắng', 'ok', 12, 1, NULL, NULL),
+(14, 'Đầm tay dài', 'tay dài, đầm tay dài, dam tay dai', 'ok', 12, 1, NULL, NULL),
+(15, 'Váy xòe cho nữ', 'ok', 'ok', 11, 1, NULL, NULL),
+(16, 'Áo dài VN', 'ok', 'áo dài', 9, 1, NULL, NULL),
+(17, 'Xanh đậm', 'qưeqweq', 'ưeqweqwe', 11, 1, NULL, NULL),
+(18, 'luat', 'qưeqwe', 'qưeqweq', 12, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -139,7 +146,8 @@ CREATE TABLE `coupon` (
 
 INSERT INTO `coupon` (`id`, `coupon_name`, `coupon_code`, `coupon_time`, `coupon_condition`, `coupon_number`) VALUES
 (1, 'giảm giá quần bò', '56XNJ', 5, 1, 10),
-(3, 'giảm giá  T-shirt', '35hklUY', 7, 2, 12000);
+(3, 'giảm giá  T-shirt', '35hklUY', 7, 2, 12000),
+(5, 'giảm giá quần bò', 'luatnt', 7, 2, 15000);
 
 -- --------------------------------------------------------
 
@@ -208,7 +216,37 @@ INSERT INTO `feeship` (`fee_id`, `fee_matp`, `fee_maqh`, `fee_xaid`, `fee_feeshi
 (4, 1, 3, 103, '10000'),
 (5, 2, 26, 745, '13000'),
 (6, 66, 657, 24547, '22000'),
-(8, 1, 2, 37, '24000');
+(8, 1, 2, 37, '17000'),
+(9, 8, 72, 2230, '35000');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `gallery`
+--
+
+CREATE TABLE `gallery` (
+  `id` int(11) NOT NULL,
+  `gallery_name` varchar(255) NOT NULL,
+  `gallery_image` varchar(255) NOT NULL,
+  `product_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `gallery`
+--
+
+INSERT INTO `gallery` (`id`, `gallery_name`, `gallery_image`, `product_id`) VALUES
+(13, 'aosomi2610.jpg', 'aosomi2610.jpg', 16),
+(14, 'so-mi-han1383.jpg', 'so-mi-han1383.jpg', 16),
+(15, 'so-mi-han7270.jpg', 'so-mi-han7270.jpg', 16),
+(20, 'product1179.jpg', 'product1179.jpg', 22),
+(21, 'product637.jpg', 'product637.jpg', 22),
+(22, 'product529.jpg', 'product529.jpg', 22),
+(23, 'so-mi-han11.jpg', 'so-mi-han11.jpg', 23),
+(24, 'blog-two97.jpg', 'blog-two97.jpg', 24),
+(25, 'product289.jpg', 'product289.jpg', 23),
+(26, 'CM134.jpg', 'CM134.jpg', 23);
 
 -- --------------------------------------------------------
 
@@ -265,11 +303,14 @@ CREATE TABLE `order` (
 --
 
 INSERT INTO `order` (`id`, `customer_id`, `shipping_id`, `order_status`, `order_code`, `created_at`, `updated_at`) VALUES
-(41, 21, 51, '1', 'bc8d0', '2021-11-27 10:48:58', NULL),
-(42, 21, 52, '1', 'd0882', '2021-11-27 10:51:02', NULL),
-(43, 21, 53, '1', '7f8d6', '2021-11-27 10:53:18', NULL),
-(44, 21, 54, '1', '962de', '2021-11-27 10:54:56', NULL),
-(45, 21, 55, '1', '4225f', '2021-11-27 10:59:32', NULL);
+(41, 21, 51, '2', 'bc8d0', '2021-11-27 10:48:58', NULL),
+(42, 21, 52, '2', 'd0882', '2021-11-27 10:51:02', NULL),
+(43, 21, 53, '3', '7f8d6', '2021-11-27 10:53:18', NULL),
+(44, 21, 54, '3', '962de', '2021-11-27 10:54:56', NULL),
+(45, 21, 55, '3', '4225f', '2021-11-27 10:59:32', NULL),
+(46, 21, 56, '0', '875d5', '2022-04-04 10:50:23', NULL),
+(47, 12, 57, '3', '926ec', '2022-05-05 08:13:31', NULL),
+(48, 14, 58, '3', 'dad5e', '2022-05-05 08:17:19', NULL);
 
 -- --------------------------------------------------------
 
@@ -310,10 +351,13 @@ INSERT INTO `order_details` (`id`, `order_code`, `product_id`, `product_name`, `
 (42, '6d0b9', 22, 'Quần Short', '140000', 1, 'Không có', '15000', NULL, NULL),
 (43, '80c3c', 16, 'Áo sơ mi đen', '150000', 1, 'Không có', '15000', NULL, NULL),
 (44, 'bc8d0', 19, 'Váy lễ hội màu đỏ', '80000', 1, '56XNJ', '15000', NULL, NULL),
-(45, 'd0882', 22, 'Quần Short', '140000', 1, 'Không có', '20000', NULL, NULL),
-(46, '7f8d6', 18, 'Váy ngang đầu gối', '250000', 1, '56XNJ', '24000', NULL, NULL),
+(45, 'd0882', 22, 'Quần Short', '140000', 3, 'Không có', '20000', NULL, NULL),
+(46, '7f8d6', 18, 'Váy ngang đầu gối', '250000', 2, '56XNJ', '24000', NULL, NULL),
 (47, '962de', 16, 'Áo sơ mi đen', '150000', 1, 'Không có', '24000', NULL, NULL),
-(48, '4225f', 12, 'Quần bò', '80000', 1, 'Không có', '15000', NULL, NULL);
+(48, '4225f', 12, 'Quần bò', '80000', 1, 'Không có', '15000', NULL, NULL),
+(49, '875d5', 16, 'Áo sơ mi đen', '150000', 2, 'Không có', '15000', NULL, NULL),
+(50, '926ec', 17, 'Áo sơ mi nữ', '250000', 4, '56XNJ', '15000', NULL, NULL),
+(51, 'dad5e', 11, 'Áo phông', '130000', 1, '35hklUY', '20000', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -356,10 +400,13 @@ CREATE TABLE `product` (
   `category_id` int(11) NOT NULL,
   `brand_id` int(11) NOT NULL,
   `product_name` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_quantity` int(11) NOT NULL,
+  `product_sold` int(11) DEFAULT NULL,
   `product_desc` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_content` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_price` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_tags` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -369,14 +416,16 @@ CREATE TABLE `product` (
 -- Đang đổ dữ liệu cho bảng `product`
 --
 
-INSERT INTO `product` (`id`, `category_id`, `brand_id`, `product_name`, `product_desc`, `product_content`, `product_price`, `product_image`, `status`, `created_at`, `updated_at`) VALUES
-(11, 12, 4, 'Áo phông', '<p><span style=\"font-size:16px\">Thời gian giao h&agrave;ng dự kiến cho sản phẩm n&agrave;y l&agrave; từ 7-9</span></p>\r\n\r\n<p><br />\r\n<span style=\"font-size:16px\">&nbsp;Ng&agrave;y 100% sản phẩm mới Chất liệu: Cotton K&iacute;ch thước: C&oacute; bốn k&iacute;ch thước (S M L XL XXL) c&oacute; sẵn trong danh s&aacute;ch sau.<br />\r\nVui l&ograve;ng cho ph&eacute;p sai số 1-2 cm do đo lường thủ c&ocirc;ng, Cảm ơn bạn (Tất cả c&aacute;c số đo bằng cm v&agrave; xin lưu &yacute; 1 cm = 0.39 inch) Gợi &yacute; c&aacute;ch chọn k&iacute;ch thước ph&ugrave; hợp:<br />\r\n&nbsp;1. Sử dụng quần &aacute;o tương tự để so s&aacute;nh với k&iacute;ch thước.<br />\r\n&nbsp;2. Chọn k&iacute;ch thước lớn hơn nếu số đo của bạn giống với k&iacute;ch thước đo phẳng trong bảng k&iacute;ch thước</span></p>\r\n\r\n<p><span style=\"font-size:16px\">Lưu &yacute;: M&agrave;u sắc thật của sản phẩm c&oacute; thể kh&aacute;c biệt so với h&igrave;nh ảnh do thiết lập m&agrave;n h&igrave;nh kh&ocirc;ng gi&ocirc;́ng nhau. Cảm ơn bạn đ&atilde; th&ocirc;ng cảm.<br />\r\nG&oacute;i h&agrave;ng bao gồm: 1 x &aacute;o</span></p>', 'ok', '130000', 'girl125.jpg', 1, NULL, NULL),
-(12, 11, 5, 'Quần bò', '<p>well done</p>', 'ok', '80000', 'quanbo17.jpg', 1, NULL, NULL),
-(16, 9, 1, 'Áo sơ mi đen', '<p>ok</p>', 'ok', '150000', 'aosomi26.jpg', 1, NULL, NULL),
-(17, 12, 1, 'Áo sơ mi nữ', '<p>oke đấy chứ</p>', 'good', '250000', 'ao_so_mi_nu45.jpg', 1, NULL, NULL),
-(18, 12, 5, 'Váy ngang đầu gối', '<p>ok</p>', 'ok', '250000', 'vaydaugoi95.jpg', 1, NULL, NULL),
-(19, 11, 4, 'Váy lễ hội màu đỏ', '<p>Thời gian giao h&agrave;ng dự kiến cho sản phẩm n&agrave;y l&agrave; từ 7-9</p>\r\n\r\n<p><br />\r\n&nbsp;Ng&agrave;y 100% sản phẩm mới Chất liệu: Cotton K&iacute;ch thước: C&oacute; bốn k&iacute;ch thước (S M L XL XXL) c&oacute; sẵn trong danh s&aacute;ch sau.<br />\r\nVui l&ograve;ng cho ph&eacute;p sai số 1-2 cm do đo lường thủ c&ocirc;ng, Cảm ơn bạn (Tất cả c&aacute;c số đo bằng cm v&agrave; xin lưu &yacute; 1 cm = 0.39 inch) Gợi &yacute; c&aacute;ch chọn k&iacute;ch thước ph&ugrave; hợp:<br />\r\n&nbsp;1. Sử dụng quần &aacute;o tương tự để so s&aacute;nh với k&iacute;ch thước.<br />\r\n&nbsp;2. Chọn k&iacute;ch thước lớn hơn nếu số đo của bạn giống với k&iacute;ch thước đo phẳng trong bảng k&iacute;ch thước</p>\r\n\r\n<p>Lưu &yacute;: M&agrave;u sắc thật của sản phẩm c&oacute; thể kh&aacute;c biệt so với h&igrave;nh ảnh do thiết lập m&agrave;n h&igrave;nh kh&ocirc;ng gi&ocirc;́ng nhau. Cảm ơn bạn đ&atilde; th&ocirc;ng cảm.<br />\r\nG&oacute;i h&agrave;ng bao gồm: 1 x &aacute;o</p>', 'ok', '80000', 'product911.jpg', 1, NULL, NULL),
-(22, 9, 6, 'Quần Short', '<p>ok</p>', 'ok', '140000', 'short52.jpg', 1, NULL, NULL);
+INSERT INTO `product` (`id`, `category_id`, `brand_id`, `product_name`, `product_quantity`, `product_sold`, `product_desc`, `product_content`, `product_price`, `product_image`, `product_tags`, `status`, `created_at`, `updated_at`) VALUES
+(11, 12, 4, 'Áo phông', 20, 0, '<p><span style=\"font-size:16px\">Thời gian giao h&agrave;ng dự kiến cho sản phẩm n&agrave;y l&agrave; từ 7-9</span></p>\r\n\r\n<p><br />\r\n<span style=\"font-size:16px\">&nbsp;Ng&agrave;y 100% sản phẩm mới Chất liệu: Cotton K&iacute;ch thước: C&oacute; bốn k&iacute;ch thước (S M L XL XXL) c&oacute; sẵn trong danh s&aacute;ch sau.<br />\r\nVui l&ograve;ng cho ph&eacute;p sai số 1-2 cm do đo lường thủ c&ocirc;ng, Cảm ơn bạn (Tất cả c&aacute;c số đo bằng cm v&agrave; xin lưu &yacute; 1 cm = 0.39 inch) Gợi &yacute; c&aacute;ch chọn k&iacute;ch thước ph&ugrave; hợp:<br />\r\n&nbsp;1. Sử dụng quần &aacute;o tương tự để so s&aacute;nh với k&iacute;ch thước.<br />\r\n&nbsp;2. Chọn k&iacute;ch thước lớn hơn nếu số đo của bạn giống với k&iacute;ch thước đo phẳng trong bảng k&iacute;ch thước</span></p>\r\n\r\n<p><span style=\"font-size:16px\">Lưu &yacute;: M&agrave;u sắc thật của sản phẩm c&oacute; thể kh&aacute;c biệt so với h&igrave;nh ảnh do thiết lập m&agrave;n h&igrave;nh kh&ocirc;ng gi&ocirc;́ng nhau. Cảm ơn bạn đ&atilde; th&ocirc;ng cảm.<br />\r\nG&oacute;i h&agrave;ng bao gồm: 1 x &aacute;o</span></p>', 'ok', '130000', 'girl125.jpg', '', 1, NULL, NULL),
+(12, 11, 5, 'Quần bò', 35, 0, '<p>well done</p>', 'ok', '80000', 'quanbo17.jpg', '', 1, NULL, NULL),
+(16, 9, 1, 'Áo sơ mi đen', 39, -1, '<p>ok</p>', 'ok', '150000', 'aosomi26.jpg', '', 1, NULL, NULL),
+(17, 12, 1, 'Áo sơ mi nữ', 25, 0, '<p>oke đấy chứ</p>', 'good', '250000', 'ao_so_mi_nu45.jpg', '', 1, NULL, NULL),
+(18, 12, 5, 'Váy ngang đầu gối', 27, 0, '<p>ok</p>', 'ok', '250000', 'vaydaugoi95.jpg', '', 1, NULL, NULL),
+(19, 16, 4, 'Váy lễ hội màu đỏ', 31, 1, '<p>Thời gian giao h&agrave;ng dự kiến cho sản phẩm n&agrave;y l&agrave; từ 7-9</p>\r\n\r\n<p><br />\r\n&nbsp;Ng&agrave;y 100% sản phẩm mới Chất liệu: Cotton K&iacute;ch thước: C&oacute; bốn k&iacute;ch thước (S M L XL XXL) c&oacute; sẵn trong danh s&aacute;ch sau.<br />\r\nVui l&ograve;ng cho ph&eacute;p sai số 1-2 cm do đo lường thủ c&ocirc;ng, Cảm ơn bạn (Tất cả c&aacute;c số đo bằng cm v&agrave; xin lưu &yacute; 1 cm = 0.39 inch) Gợi &yacute; c&aacute;ch chọn k&iacute;ch thước ph&ugrave; hợp:<br />\r\n&nbsp;1. Sử dụng quần &aacute;o tương tự để so s&aacute;nh với k&iacute;ch thước.<br />\r\n&nbsp;2. Chọn k&iacute;ch thước lớn hơn nếu số đo của bạn giống với k&iacute;ch thước đo phẳng trong bảng k&iacute;ch thước</p>\r\n\r\n<p>Lưu &yacute;: M&agrave;u sắc thật của sản phẩm c&oacute; thể kh&aacute;c biệt so với h&igrave;nh ảnh do thiết lập m&agrave;n h&igrave;nh kh&ocirc;ng gi&ocirc;́ng nhau. Cảm ơn bạn đ&atilde; th&ocirc;ng cảm.<br />\r\nG&oacute;i h&agrave;ng bao gồm: 1 x &aacute;o</p>', 'ok', '80000', 'product911.jpg', 'quần xanh', 1, NULL, NULL),
+(22, 14, 6, 'Quần Short', 27, 3, '<p>ok</p>', 'ok', '140000', 'short52.jpg', 'quần xanh', 1, NULL, NULL),
+(23, 14, 6, 'Áo sơ mi', 18, NULL, '<p>&aacute;dsadad</p>', 'ádadad', '80000', 'so-mi-han11.jpg', 'quần trắng', 1, NULL, NULL),
+(24, 18, 5, 'luat', 50, NULL, '<p>&aacute;das&aacute;dasd</p>', 'ádasdad', '150000', 'blog-two97.jpg', 'quần luật', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1130,7 +1179,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('5296nI0e2n90y5uJB0wNefMXQF9tO1t5Q4hvtLQ8', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36', 'YTo1OntzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czozNToiaHR0cDovL2R1Y2x1YXQuY29tL3ZpZXctb3JkZXIvNDIyNWYiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjY6Il90b2tlbiI7czo0MDoiN0Y4b1NFZXZZVEJPR0hXQVI0ZnRWczhEV1B5QU81UnZGUTd5SUVsWSI7czoyOiJpZCI7aToyMTtzOjUyOiJsb2dpbl9hZG1pbl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7fQ==', 1638010809);
+('1vitaxzI1P7ry91bkYRmXA4rJLj8zJhylx8uxJDb', NULL, '127.0.0.1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoib0RFWldQVTJsYkQ1NEtnN1NUNXJtNjBpWThzQjJ1OW5GdVgzdTBObyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NDoiY2FydCI7YToxOntpOjA7YTo3OntzOjEwOiJzZXNzaW9uX2lkIjtzOjU6IjIzNzU5IjtzOjEyOiJwcm9kdWN0X25hbWUiO3M6NDoibHVhdCI7czoyOiJpZCI7czoyOiIyNCI7czoxMzoicHJvZHVjdF9pbWFnZSI7czoxNDoiYmxvZy10d285Ny5qcGciO3M6MTM6InByb2R1Y3RfcHJpY2UiO3M6NjoiMTUwMDAwIjtzOjE2OiJwcm9kdWN0X3F1YW50aXR5IjtzOjI6IjUwIjtzOjExOiJwcm9kdWN0X3F0eSI7czoxOiIxIjt9fX0=', 1657790540),
+('BfUrOAvj5802jJcndg2V7AerqjoCdTAOZmiKuRBZ', NULL, '127.0.0.1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiMFpkUjExa01WUzhoUDVuMm1uWHVlSFZOd2l0OUNPd09aWHJ2a0QyZCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzM6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9zZW5kLWNvdXBvbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6MjoiaWQiO2k6MTI7czo1MjoibG9naW5fYWRtaW5fNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO30=', 1657791801);
 
 -- --------------------------------------------------------
 
@@ -1175,7 +1225,10 @@ INSERT INTO `shipping` (`id`, `shipping_name`, `shipping_address`, `shipping_pho
 (52, 'holuat', 'Suối tiên102', '1673515202', 'holuat162@gmail.com', 'ok2', 0, NULL, NULL),
 (53, 'holuat', 'Suối tiên1213', '1673515202', 'holuat162@gmail.com', 'ok3', 1, NULL, NULL),
 (54, 'holuat', 'Suối tiên12135', '1673515202', 'holuat162@gmail.com', 'ok4', 0, NULL, NULL),
-(55, 'Hồ Đức Luật', 'Suối tiên 1', '0373515202', 'holuat162@gmail.com', 'ok5', 1, NULL, NULL);
+(55, 'Hồ Đức Luật', 'Suối tiên 1', '0373515202', 'holuat162@gmail.com', 'ok5', 1, NULL, NULL),
+(56, 'luathd', 'suối tiên 2', '0373515202', 'luathd@miczone.asia', 'oke', 0, NULL, NULL),
+(57, 'duy khoa', 'hcm 12', '123123123', 'holuat162@gmail.com', 'cần nhanh ngày mai', 1, NULL, NULL),
+(58, 'chien', 'ádasdasd', 'ádasdasd', 'ádasdasd', 'ádasdasd', 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -12565,6 +12618,12 @@ ALTER TABLE `feeship`
   ADD PRIMARY KEY (`fee_id`);
 
 --
+-- Chỉ mục cho bảng `gallery`
+--
+ALTER TABLE `gallery`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Chỉ mục cho bảng `migrations`
 --
 ALTER TABLE `migrations`
@@ -12673,13 +12732,13 @@ ALTER TABLE `brand_product`
 -- AUTO_INCREMENT cho bảng `category_product`
 --
 ALTER TABLE `category_product`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT cho bảng `coupon`
 --
 ALTER TABLE `coupon`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `customer`
@@ -12697,7 +12756,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT cho bảng `feeship`
 --
 ALTER TABLE `feeship`
-  MODIFY `fee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `fee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT cho bảng `gallery`
+--
+ALTER TABLE `gallery`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT cho bảng `migrations`
@@ -12709,13 +12774,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT cho bảng `order`
 --
 ALTER TABLE `order`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT cho bảng `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT cho bảng `personal_access_tokens`
@@ -12727,13 +12792,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT cho bảng `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT cho bảng `shipping`
 --
 ALTER TABLE `shipping`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT cho bảng `slider`
